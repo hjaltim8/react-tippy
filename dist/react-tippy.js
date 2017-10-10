@@ -16,9 +16,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -119,12 +119,11 @@ var Selectors = exports.Selectors = {
   ARROW: '[x-arrow]',
   TOOLTIPPED_EL: '[data-tooltipped]',
   CONTROLLER: '[data-tippy-controller]'
-};
 
-/**
-* The default settings applied to each instance
-*/
-var Defaults = exports.Defaults = {
+  /**
+  * The default settings applied to each instance
+  */
+};var Defaults = exports.Defaults = {
   html: false,
   position: 'top',
   animation: 'shift',
@@ -159,13 +158,12 @@ var Defaults = exports.Defaults = {
   popperOptions: {},
   open: undefined,
   onRequestClose: function onRequestClose() {}
-};
 
-/**
-* The keys of the defaults object for reducing down into a new object
-* Used in `getIndividualSettings()`
-*/
-var DefaultsKeys = exports.DefaultsKeys = Browser.SUPPORTED && Object.keys(Defaults);
+  /**
+  * The keys of the defaults object for reducing down into a new object
+  * Used in `getIndividualSettings()`
+  */
+};var DefaultsKeys = exports.DefaultsKeys = Browser.SUPPORTED && Object.keys(Defaults);
 
 /***/ }),
 /* 1 */
@@ -390,6 +388,8 @@ var _tippy2 = _interopRequireDefault(_tippy);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -424,7 +424,7 @@ var defaultProps = {
   arrowSize: 'regular',
   size: 'regular',
   className: '',
-  style: {},
+  style: { display: 'inline' },
   distance: 10,
   onRequestClose: function onRequestClose() {},
   sticky: false,
@@ -660,20 +660,26 @@ var Tooltip = function (_Component) {
     value: function render() {
       var _this3 = this;
 
+      var _props = this.props,
+          title = _props.title,
+          className = _props.className,
+          tabIndex = _props.tabIndex,
+          children = _props.children,
+          style = _props.style,
+          passThroughProps = _objectWithoutProperties(_props, ['title', 'className', 'tabIndex', 'children', 'style']);
+
       return _react2.default.createElement(
         'div',
-        {
+        _extends({
           ref: function ref(tooltip) {
             _this3.tooltipDOM = tooltip;
           },
-          title: this.props.title,
-          className: this.props.className,
-          tabIndex: this.props.tabIndex,
-          style: _extends({
-            display: 'inline'
-          }, this.props.style)
-        },
-        this.props.children
+          title: title,
+          className: className,
+          tabIndex: tabIndex,
+          style: _extends({}, style)
+        }, passThroughProps),
+        children
       );
     }
   }]);
@@ -1259,7 +1265,7 @@ function createPopperInstance(data) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.default = createTooltips;
 
@@ -1299,47 +1305,47 @@ var idCounter = 1;
 * @return {Object[]} Array of ref data objects
 */
 function createTooltips(els) {
-  var _this = this;
+    var _this = this;
 
-  return els.reduce(function (a, el) {
-    var id = idCounter;
+    return els.reduce(function (a, el) {
+        var id = idCounter;
 
-    var settings = (0, _evaluateSettings2.default)(_this.settings.performance ? _this.settings : (0, _getIndividualSettings2.default)(el, _this.settings));
+        var settings = (0, _evaluateSettings2.default)(_this.settings.performance ? _this.settings : (0, _getIndividualSettings2.default)(el, _this.settings));
 
-    var html = settings.html,
-        trigger = settings.trigger,
-        touchHold = settings.touchHold;
+        var html = settings.html,
+            trigger = settings.trigger,
+            touchHold = settings.touchHold;
 
 
-    var title = el.getAttribute('title');
-    if (!title && !html) return a;
+        var title = el.getAttribute('title');
+        if (!title && !html) return a;
 
-    el.setAttribute('data-tooltipped', '');
-    el.setAttribute('aria-describedby', 'tippy-tooltip-' + id);
-    (0, _removeTitle2.default)(el);
+        el.setAttribute('data-tooltipped', '');
+        el.setAttribute('aria-describedby', 'tippy-tooltip-' + id);
+        (0, _removeTitle2.default)(el);
 
-    var popper = (0, _createPopperElement2.default)(id, title, settings);
-    var handlers = _getEventListenerHandlers2.default.call(_this, el, popper, settings);
+        var popper = (0, _createPopperElement2.default)(id, title, settings);
+        var handlers = _getEventListenerHandlers2.default.call(_this, el, popper, settings);
 
-    var listeners = [];
+        var listeners = [];
 
-    trigger.trim().split(' ').forEach(function (event) {
-      return listeners = listeners.concat((0, _createTrigger2.default)(event, el, handlers, touchHold));
-    });
+        trigger.trim().split(' ').forEach(function (event) {
+            return listeners = listeners.concat((0, _createTrigger2.default)(event, el, handlers, touchHold));
+        });
 
-    a.push({
-      id: id,
-      el: el,
-      popper: popper,
-      settings: settings,
-      listeners: listeners,
-      tippyInstance: _this
-    });
+        a.push({
+            id: id,
+            el: el,
+            popper: popper,
+            settings: settings,
+            listeners: listeners,
+            tippyInstance: _this
+        });
 
-    idCounter++;
+        idCounter++;
 
-    return a;
-  }, []);
+        return a;
+    }, []);
 }
 
 /***/ }),

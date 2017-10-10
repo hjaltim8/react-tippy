@@ -29,7 +29,7 @@ const defaultProps = {
   arrowSize: 'regular',
   size: 'regular',
   className: '',
-  style: {},
+  style: { display: 'inline' },
   distance: 10,
   onRequestClose: () => {},
   sticky: false,
@@ -243,18 +243,17 @@ class Tooltip extends Component {
   }
 
   render() {
+    const { title, className, tabIndex, children, style, ...passThroughProps } = this.props
     return (
       <div
         ref={(tooltip) => { this.tooltipDOM = tooltip; }}
-        title={this.props.title}
-        className={this.props.className}
-        tabIndex={this.props.tabIndex}
-        style={{
-          display: 'inline',
-          ...this.props.style
-        }}
+        title={title}
+        className={className}
+        tabIndex={tabIndex}
+        style={{ ...style }}
+        {...passThroughProps}
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }
