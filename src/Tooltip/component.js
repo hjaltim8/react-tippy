@@ -246,10 +246,24 @@ class Tooltip extends Component {
   render() {
     const { title, className, tabIndex, children, style, wrapper, ...passThroughProps } = this.props
 
-    const Wrapper = wrapper === undefined ? <div></div> : wrapper
+    if (wrapper !== undefined) {
+      const Wrapper = wrapper
+      return (
+        <Wrapper
+          ref={(tooltip) => { this.tooltipDOM = tooltip; }}
+          title={title}
+          className={className}
+          tabIndex={tabIndex}
+          style={{ ...style }}
+          {...passThroughProps}
+        >
+          {children}
+        </Wrapper>
+      );
+    }
 
     return (
-      <Wrapper
+      <div
         ref={(tooltip) => { this.tooltipDOM = tooltip; }}
         title={title}
         className={className}
@@ -258,7 +272,7 @@ class Tooltip extends Component {
         {...passThroughProps}
       >
         {children}
-      </Wrapper>
+      </div>
     );
   }
 }

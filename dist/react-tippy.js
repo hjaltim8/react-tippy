@@ -670,10 +670,25 @@ var Tooltip = function (_Component) {
           wrapper = _props.wrapper,
           passThroughProps = _objectWithoutProperties(_props, ['title', 'className', 'tabIndex', 'children', 'style', 'wrapper']);
 
-      var Wrapper = wrapper === undefined ? _react2.default.createElement('div', null) : wrapper;
+      if (wrapper !== undefined) {
+        var Wrapper = wrapper;
+        return _react2.default.createElement(
+          Wrapper,
+          _extends({
+            ref: function ref(tooltip) {
+              _this3.tooltipDOM = tooltip;
+            },
+            title: title,
+            className: className,
+            tabIndex: tabIndex,
+            style: _extends({}, style)
+          }, passThroughProps),
+          children
+        );
+      }
 
       return _react2.default.createElement(
-        Wrapper,
+        'div',
         _extends({
           ref: function ref(tooltip) {
             _this3.tooltipDOM = tooltip;
