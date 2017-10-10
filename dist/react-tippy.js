@@ -430,7 +430,8 @@ var defaultProps = {
   sticky: false,
   stickyDuration: 200,
   touchHold: false,
-  unmountHTMLWhenHide: false
+  unmountHTMLWhenHide: false,
+  wrapper: undefined
 };
 
 var propKeys = Object.keys(defaultProps);
@@ -666,10 +667,13 @@ var Tooltip = function (_Component) {
           tabIndex = _props.tabIndex,
           children = _props.children,
           style = _props.style,
-          passThroughProps = _objectWithoutProperties(_props, ['title', 'className', 'tabIndex', 'children', 'style']);
+          wrapper = _props.wrapper,
+          passThroughProps = _objectWithoutProperties(_props, ['title', 'className', 'tabIndex', 'children', 'style', 'wrapper']);
+
+      var Wrapper = wrapper === undefined ? div : wrapper;
 
       return _react2.default.createElement(
-        'div',
+        Wrapper,
         _extends({
           ref: function ref(tooltip) {
             _this3.tooltipDOM = tooltip;

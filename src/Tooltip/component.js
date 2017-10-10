@@ -36,6 +36,7 @@ const defaultProps = {
   stickyDuration: 200,
   touchHold: false,
   unmountHTMLWhenHide: false,
+  wrapper: undefined,
 };
 
 const propKeys = Object.keys(defaultProps)
@@ -243,9 +244,12 @@ class Tooltip extends Component {
   }
 
   render() {
-    const { title, className, tabIndex, children, style, ...passThroughProps } = this.props
+    const { title, className, tabIndex, children, style, wrapper, ...passThroughProps } = this.props
+
+    const Wrapper = wrapper === undefined ? div : wrapper
+
     return (
-      <div
+      <Wrapper
         ref={(tooltip) => { this.tooltipDOM = tooltip; }}
         title={title}
         className={className}
@@ -254,7 +258,7 @@ class Tooltip extends Component {
         {...passThroughProps}
       >
         {children}
-      </div>
+      </Wrapper>
     );
   }
 }
