@@ -246,7 +246,7 @@ class Tooltip extends Component {
   render() {
     const { title, className, tabIndex, children, style, wrapper, ...passThroughProps } = this.props
 
-    const Wrapper = wrapper === undefined ? div : wrapper
+    const Wrapper = wrapper === undefined ? <div></div> : wrapper
 
     return (
       <Wrapper

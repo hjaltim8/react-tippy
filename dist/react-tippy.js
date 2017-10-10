@@ -670,7 +670,7 @@ var Tooltip = function (_Component) {
           wrapper = _props.wrapper,
           passThroughProps = _objectWithoutProperties(_props, ['title', 'className', 'tabIndex', 'children', 'style', 'wrapper']);
 
-      var Wrapper = wrapper === undefined ? div : wrapper;
+      var Wrapper = wrapper === undefined ? _react2.default.createElement('div', null) : wrapper;
 
       return _react2.default.createElement(
         Wrapper,
